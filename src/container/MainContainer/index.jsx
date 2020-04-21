@@ -1,14 +1,15 @@
 import React from 'react'
+import MovieItem from '../../components/MovieItem'
 
 
 export default class MainContainer extends React.Component {
 
   state = {
     movieSearch: '',
-    movieResults: {},
+    movieResults: [],
   }
 
-  handleMovieSearch = ({ target }) => {
+  handleMovieSearch = ({target}) => {
     this.setState({
       movieSearch: target.value,
     })
@@ -19,7 +20,7 @@ export default class MainContainer extends React.Component {
     .then(resp => resp.json())
     .then(result => {
       this.setState({
-        movieResults: result,
+        movieResults: result.Search,
       })
     })
   }
@@ -34,7 +35,7 @@ export default class MainContainer extends React.Component {
         <input type="text" onChange={this.handleMovieSearch} />
         <button onClick={this.handleClickList}>Consultar</button>
         <br/>
-        {JSON.stringify(movieResults)}
+        <MovieItem movies={movieResults} />
       </div>
     )
   }
