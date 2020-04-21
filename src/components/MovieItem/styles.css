@@ -21,6 +21,8 @@
     position: relative;
     margin: auto;
     overflow: hidden;
+    height: 400px;
+    width: 300px;
 }
 .image-poster img {
     max-width: 100%;
