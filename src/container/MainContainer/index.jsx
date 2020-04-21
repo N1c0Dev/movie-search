@@ -1,6 +1,11 @@
 import React from 'react'
+import {
+  Container,
+  Row,
+  Navbar,
+} from 'react-bootstrap'
 import MovieItem from '../../components/MovieItem'
-
+import './styles.css'
 
 export default class MainContainer extends React.Component {
 
@@ -25,6 +30,12 @@ export default class MainContainer extends React.Component {
     })
   }
 
+  handleEnterSearch = (event) => {
+    if(event.charCode === 13){
+      this.handleClickList()
+    }
+  }
+
   render() {
     const {
       movieResults,
@@ -32,10 +43,26 @@ export default class MainContainer extends React.Component {
 
     return (
       <div>
-        <input type="text" onChange={this.handleMovieSearch} />
-        <button onClick={this.handleClickList}>Consultar</button>
-        <br/>
-        <MovieItem movies={movieResults} />
+        <Navbar className="navbar-header">
+          <Container>
+            <Row className="width-100">
+              <input className="width-30" type="text" placeholder="Type the movie name and press Enter..." onChange={this.handleMovieSearch} onKeyPress={this.handleEnterSearch} />
+              {/* <button onClick={this.handleClickList}>Consultar</button> */}
+            </Row>
+          </Container>
+        </Navbar>
+        <Container>
+          <div className="title">Movie List</div>
+          <Row className="list-container">
+            <MovieItem movies={movieResults} />
+          </Row>
+        </Container>
+        <Container>
+          <div className="title">Favorites</div>
+          <Row className="list-container">
+            <MovieItem movies={movieResults} />
+          </Row>
+        </Container>
       </div>
     )
   }
