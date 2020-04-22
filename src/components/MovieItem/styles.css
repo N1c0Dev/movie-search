@@ -12,3 +12,24 @@
 .blue-site {
     background-color: #0069B7 !important;
 }
+.favourite-default {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    font-size: 2.5em;
+    cursor: pointer;
+    color: rgba(0, 104, 184, 0.5);
+    width: 100%;
+    padding: 15px;
+}
+.favourite-fill {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    font-size: 2.5em;
+    cursor: pointer;
+    color: #0069B7;
+    width: 100%;
+    padding: 15px;
+
+}

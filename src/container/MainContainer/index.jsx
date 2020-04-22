@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faFilm,
-  faHeart,
+  faStar,
 } from '@fortawesome/free-solid-svg-icons'
 import MovieContainer from '../MovieContainer'
 import './styles.css'
@@ -18,6 +18,7 @@ export default class MainContainer extends React.Component {
   state = {
     movieSearch: '',
     movieResults: [],
+    movieFavourites: [],
     noMovieText: "No movies found",
     noFavouriteText: "No favourites found",
     searchPlaceholder: "Type the movie title and press Enter..."
@@ -39,20 +40,41 @@ export default class MainContainer extends React.Component {
     })
   }
 
+  handleFavouriteList =  async () => {
+    const favouriteStorage = localStorage.favourite.split(',')
+
+    const favouriteList =  await Promise.all(
+      favouriteStorage.map(async (favourite) => await(
+        await fetch(`${process.env.REACT_APP_BASE_URL}?apikey=${process.env.REACT_APP_APIKEY}&i=${favourite}&type=movie`)
+        .then(async resp => await resp.json())
+        .then(async result => result)
+      )
+    ))
+
+    this.setState({
+      movieFavourites: favouriteList
+    })
+  }
+
   handleEnterSearch = (event) => {
     if(event.charCode === 13){
       this.handleClickList()
     }
   }
 
+  componentDidMount(){
+    this.handleFavouriteList()
+  }
+
   render() {
     const {
       movieResults,
+      movieFavourites,
       noMovieText,
       noFavouriteText,
       searchPlaceholder,
     } = this.state
-
+    console.log('hello' + movieFavourites)
     return (
       <div>
         <Navbar className="navbar-header">
@@ -84,14 +106,22 @@ export default class MainContainer extends React.Component {
         </Container>
         <Container>
           <div className="title">Favorites</div>
-          <Row className="list-container margin-bottom-50">
-            <Col className="text-center image-container" xs={12} sm={12} md={4} lg={4} />
-            <Col className="text-center image-container" xs={12} sm={12} md={4} lg={4}>
-              <FontAwesomeIcon className="default-icons" icon={faHeart} />
-              <div className="default-title">{noFavouriteText}</div>
-            </Col>
-            <Col className="text-center image-container" xs={12} sm={12} md={4} lg={4} />
-          </Row>
+          {
+            movieFavourites.length <= 0 ? (
+              <Row className="list-container margin-bottom-50">
+                <Col className="text-center image-container" xs={12} sm={12} md={4} lg={4} />
+                <Col className="text-center image-container" xs={12} sm={12} md={4} lg={4}>
+                  <FontAwesomeIcon className="default-icons" icon={faStar} />
+                  <div className="default-title">{noFavouriteText}</div>
+                </Col>
+                <Col className="text-center image-container" xs={12} sm={12} md={4} lg={4} />
+              </Row>
+            ) : (
+              <Row className="list-container">
+                <MovieContainer movies={movieFavourites} />
+              </Row>
+            )
+          }
         </Container>
       </div>
     )
