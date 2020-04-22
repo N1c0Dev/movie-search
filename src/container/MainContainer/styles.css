@@ -1,0 +1,46 @@
+input {
+    border: none;
+    border-bottom: solid 2px #0069B7;
+    font-size: 1.1em !important;
+    margin-left: 70% !important;
+}
+input:focus{
+    outline: none;
+}
+
+.navbar-header {
+    padding: 20px 0px;
+    box-shadow: 0px 6px 5px -1px rgba(0, 0, 0, 0.1);
+}
+.list-container {
+    margin-top: 20px;
+    background-color: #F5F5F5;
+}
+.list-container > div {
+    padding: 30px 0px;
+}
+.title{
+    margin-top: 20px;
+    color: #0069B7;
+    font-size: 2em;
+    width: 200px;
+    border-bottom: solid;
+}
+.default-icons {
+    color: #0069B7;
+    font-size: 4em;
+}
+.default-title {
+    font-size: 1.5em;
+    margin-top: 10px;
+}
+
+.width-100 {
+    width: 100%;
+}
+.width-30 {
+    width: 30%;
+}
+.margin-bottom-50 {
+    margin-bottom: 50px;
+}
