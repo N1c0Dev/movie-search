@@ -4,7 +4,7 @@ import {
   Row,
   Navbar,
 } from 'react-bootstrap'
-import MovieItem from '../../components/MovieItem'
+import MovieContainer from '../MovieContainer'
 import './styles.css'
 
 export default class MainContainer extends React.Component {
@@ -21,7 +21,7 @@ export default class MainContainer extends React.Component {
   }
 
   handleClickList = () => {
-    fetch(`${process.env.REACT_APP_BASE_URL}?apikey=${process.env.REACT_APP_APIKEY}&s=${this.state.movieSearch}`)
+    fetch(`${process.env.REACT_APP_BASE_URL}?apikey=${process.env.REACT_APP_APIKEY}&s=${this.state.movieSearch}&type=movie`)
     .then(resp => resp.json())
     .then(result => {
       this.setState({
@@ -47,20 +47,19 @@ export default class MainContainer extends React.Component {
           <Container>
             <Row className="width-100">
               <input className="width-30" type="text" placeholder="Type the movie name and press Enter..." onChange={this.handleMovieSearch} onKeyPress={this.handleEnterSearch} />
-              {/* <button onClick={this.handleClickList}>Consultar</button> */}
             </Row>
           </Container>
         </Navbar>
         <Container>
           <div className="title">Movie List</div>
           <Row className="list-container">
-            <MovieItem movies={movieResults} />
+            <MovieContainer movies={movieResults} />
           </Row>
         </Container>
         <Container>
           <div className="title">Favorites</div>
           <Row className="list-container">
-            <MovieItem movies={movieResults} />
+            <MovieContainer movies={movieResults} />
           </Row>
         </Container>
       </div>

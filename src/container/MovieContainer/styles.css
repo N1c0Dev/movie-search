@@ -1,0 +1,31 @@
+.image-size {
+    height: 400px;
+    width: 300px;
+    cursor: pointer;
+}
+.image-size:hover {
+    transform: scale(1.1);
+}
+.image-container {
+    margin-bottom: 25px;
+}
+.image-title {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+.image-subtitle {
+    font-size: 1em;
+}
+
+.image-poster {
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+    height: 400px;
+    width: 300px;
+}
+.image-poster img {
+    max-width: 100%;
+    transition: all 0.3s;
+    transform: scale(1);
+}
