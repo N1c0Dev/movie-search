@@ -6,12 +6,18 @@ import {
   Card,
   Accordion,
 } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faStar,
+  faFilm,
+} from '@fortawesome/free-solid-svg-icons'
 import './styles.css'
 
 export default class MovieItem extends React.Component {
 
   state = {
     showModal: false,
+    favourite: false,
     movieInfo: {
       Ratings: [],
     },
@@ -34,6 +40,27 @@ export default class MovieItem extends React.Component {
     })
   }
 
+  handleFavourite = (imdbID) => {
+    const favouriteStorage = localStorage.getItem('favourite') === null || localStorage.getItem('favourite') === '' ? '' : localStorage.getItem('favourite')
+
+    if (favouriteStorage.indexOf(imdbID) === -1) {
+      localStorage.setItem('favourite', favouriteStorage === '' ? `${imdbID},` : `${favouriteStorage},${imdbID}`)
+    }else {
+      const favouriteList = favouriteStorage.split(',')
+
+      favouriteList.splice(favouriteList.indexOf(imdbID), 1)
+      localStorage.setItem('favourite', favouriteList.toString())
+
+      if (localStorage.favourite === '') {
+        localStorage.clear()
+      }
+    }
+
+    this.setState({
+      favourite: !this.state.favourite,
+    })
+  }
+
   renderRating = (ratings) => (
     ratings.map(rating => (
       <div>
@@ -46,18 +73,35 @@ export default class MovieItem extends React.Component {
     const {
       showModal,
       movieInfo,
+      favourite,
     } = this.state
     const {
       movie,
     } = this.props
 
     return (
-      <Col className="text-center image-container" xs={12} sm={12} md={6} lg={4}>
-        <div className="image-poster" onClick={this.displayInfo}>
-          <img className="image-size" src={movie.Poster} alt="Poster"/>
-        </div>
-        <div className="image-title">{movie.Title}</div>
-        <div className="image-subtitle">{movie.Year}</div>
+      <Col className="text-center image-container" xs={movie.Response === 'False' ? 0 : 12} sm={movie.Response === 'False' ? 0 : 12} md={movie.Response === 'False' ? 0: 6} lg={movie.Response === 'False' ? 0 : 4}>
+        {
+          movie.Response === 'False' ? (
+            ''
+          ) : (
+            <span>
+              <div className="image-poster" onClick={this.displayInfo}>
+              {!movie.hasOwnProperty('Poster') || movie.Poster !== 'N/A' ? (
+                <img className="image-size" src={movie.Poster} alt="Poster"/>
+                ) : (
+                  <FontAwesomeIcon className="no-poster" icon={faFilm} />
+                )
+              }
+              </div>
+              <div className={favourite ? "favourite-fill" : "favourite-default"}>
+                <FontAwesomeIcon onClick={() => this.handleFavourite(movie.imdbID)} icon={faStar} />
+              </div>
+              <div className="image-title">{movie.Title}</div>
+              <div className="image-subtitle">{movie.Year}</div>
+            </span>
+        )
+      }
         <Modal show={showModal} onHide={this.handleModal} animation={true}>
           <Modal.Header className="modal-header">
             <Modal.Title>{movieInfo.Title}</Modal.Title>
