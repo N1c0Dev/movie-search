@@ -1,5 +1,6 @@
 import React from 'react';
 import MainContainer from './container/MainContainer'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   return (

@@ -1,0 +1,14 @@
+.modal-header {
+    background-color: #0069B7;
+    color: #FFF;
+}
+.modal-item-title{
+    font-size: 1.3em;
+    cursor: pointer;
+}
+.modal-item {
+    font-size: 1.2em;
+}
+.blue-site {
+    background-color: #0069B7 !important;
+}
