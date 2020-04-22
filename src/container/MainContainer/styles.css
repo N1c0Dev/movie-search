@@ -26,10 +26,21 @@ input:focus{
     width: 200px;
     border-bottom: solid;
 }
+.default-icons {
+    color: #0069B7;
+    font-size: 4em;
+}
+.default-title {
+    font-size: 1.5em;
+    margin-top: 10px;
+}
 
 .width-100 {
     width: 100%;
 }
 .width-30 {
     width: 30%;
+}
+.margin-bottom-50 {
+    margin-bottom: 50px;
 }
