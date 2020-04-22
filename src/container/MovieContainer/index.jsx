@@ -6,23 +6,25 @@ import {
 import MovieItem from '../../components/MovieItem'
 import './styles.css'
 
-export default class MovieContainer extends React.Component {
+const MovieContainer = ({ movies }) => {
 
 
 
-  renderItems = () => {
-    return this.props.movies.map(movie => (
-        <MovieItem movie={movie} />
-    ))
+  function renderItems() {
+    return movies.map(movie => {
+      const favouriteStorage = localStorage.favourite !== undefined ? localStorage.favourite.split(',') : []
+
+      return (<MovieItem movie={movie} favourite={favouriteStorage.indexOf(movie.imdbID) > -1} />)
+    })
   }
 
-  render() {
     return (
       <Container>
         <Row>
-          {this.renderItems()}
+          {renderItems()}
         </Row>
       </Container>
     )
-  }
 }
+
+export default MovieContainer;

@@ -9,6 +9,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faStar,
+  faFilm,
 } from '@fortawesome/free-solid-svg-icons'
 import './styles.css'
 
@@ -41,8 +42,18 @@ export default class MovieItem extends React.Component {
 
   handleFavourite = (imdbID) => {
     const favouriteStorage = localStorage.getItem('favourite') === null || localStorage.getItem('favourite') === '' ? '' : localStorage.getItem('favourite')
+
     if (favouriteStorage.indexOf(imdbID) === -1) {
-      localStorage.setItem('favourite', `${favouriteStorage},${imdbID}`)
+      localStorage.setItem('favourite', favouriteStorage === '' ? `${imdbID},` : `${favouriteStorage},${imdbID}`)
+    }else {
+      const favouriteList = favouriteStorage.split(',')
+
+      favouriteList.splice(favouriteList.indexOf(imdbID), 1)
+      localStorage.setItem('favourite', favouriteList.toString())
+
+      if (localStorage.favourite === '') {
+        localStorage.clear()
+      }
     }
 
     this.setState({
@@ -76,10 +87,10 @@ export default class MovieItem extends React.Component {
           ) : (
             <span>
               <div className="image-poster" onClick={this.displayInfo}>
-              {movie.hasOwnProperty('Poster') || movie.Poster !== 'N/A' ? (
+              {!movie.hasOwnProperty('Poster') || movie.Poster !== 'N/A' ? (
                 <img className="image-size" src={movie.Poster} alt="Poster"/>
                 ) : (
-                  'Sin poster'
+                  <FontAwesomeIcon className="no-poster" icon={faFilm} />
                 )
               }
               </div>

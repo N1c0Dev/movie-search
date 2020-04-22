@@ -20,7 +20,7 @@ export default class MainContainer extends React.Component {
     movieResults: [],
     movieFavourites: [],
     noMovieText: "No movies found",
-    noFavouriteText: "No favourites found",
+    noFavouriteText: "No favorites found",
     searchPlaceholder: "Type the movie title and press Enter..."
   }
 
@@ -41,7 +41,7 @@ export default class MainContainer extends React.Component {
   }
 
   handleFavouriteList =  async () => {
-    const favouriteStorage = localStorage.favourite.split(',')
+    const favouriteStorage = localStorage.favourite !== undefined ? localStorage.favourite.split(',') : []
 
     const favouriteList =  await Promise.all(
       favouriteStorage.map(async (favourite) => await(
@@ -74,7 +74,7 @@ export default class MainContainer extends React.Component {
       noFavouriteText,
       searchPlaceholder,
     } = this.state
-    console.log('hello' + movieFavourites)
+
     return (
       <div>
         <Navbar className="navbar-header">
